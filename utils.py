@@ -28,7 +28,11 @@ OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 def get_num_tokens(texts, model):
     num_tokens = []
-    encoding = tiktoken.encoding_for_model(model)
+    try:
+        encoding = tiktoken.encoding_for_model(model)
+    except KeyError:
+        # 如果不是OpenAI模型，使用默认编码（如cl100k_base）
+        encoding = tiktoken.get_encoding("cl100k_base")
     for text in texts:
         num_tokens.append(len(encoding.encode(text)))
     return num_tokens
@@ -87,8 +91,17 @@ def get_completion(prompt, model_name="gpt-4", max_tokens=250, retry_times=3, te
     Returns:
     A dictionary with the response message, time taken for the request, and tokens consumed.
     """
+    
+    with open("config.yaml", 'r') as stream:
+        try:
+            params = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
 
-    client = openai.OpenAI(api_key=OPENAI_API_KEY)
+    COMPLETIONS_MODEL = params["OPENAI_API_MODEL"]
+    OLLAMA_BASE_URL = params["OLLAMA_BASE_URL"] + "/v1"
+    model_name = COMPLETIONS_MODEL
+    client = openai.OpenAI(base_url=OLLAMA_BASE_URL, api_key="anything")
 
     for attempt in range(retry_times):
         try:

@@ -1,6 +1,5 @@
 numpy
 openai
-langchain
 tiktoken
 networkx
 pillow
@@ -9,3 +8,4 @@ python-docx
 graphlearning
 Annoy
 pandas
+langchain-ollama

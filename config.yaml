@@ -1,6 +1,7 @@
-OPENAI_API_KEY: "your openai api key"
-OPENAI_API_MODEL: "gpt-3.5-turbo"
-EMBEDDING_MODEL: "text-embedding-ada-002"
-
-
+OPENAI_API_KEY: "unused"
+# OPENAI_API_MODEL: "gpt-3.5-turbo"
+# EMBEDDING_MODEL: "text-embedding-ada-002"
+OPENAI_API_MODEL: "qwen2.5:14b"
+EMBEDDING_MODEL: "qwen2.5:14b"
+OLLAMA_BASE_URL: "http://127.0.0.1:11434"
 
